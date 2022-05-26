@@ -1,14 +1,16 @@
--- Provide a query that shows the 
--- most purchased track(s) of 2013.
+-- Provide a query that shows the most 
+-- purchased Media Type.
 
 SELECT
-    t.name,
+    m.name,
     SUM(i.total) as PurchaseAmount
-FROM track t 
+FROM track t
+JOIN MediaType m 
+    ON t.mediatypeid = m.mediatypeid
 JOIN InvoiceLine il 
     ON t.trackID = il.trackid
 JOIN Invoice i 
     ON il.invoiceId = i.invoiceId
-WHERE i.invoicedate LIKE '2013%'
-GROUP BY t.Name
+GROUP BY m.name
 ORDER BY PurchaseAmount DESC
+LIMIT 1
